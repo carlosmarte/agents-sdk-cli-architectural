@@ -87,6 +87,19 @@ importers:
         specifier: ^22.10.0
         version: 22.19.19
 
+  ../../integrations/ts/reexport-adapter-local:
+    dependencies:
+      '@llmorch/adapter-local':
+        specifier: workspace:*
+        version: link:../../../packages/ts/adapter-local
+      '@llmorch/core':
+        specifier: workspace:*
+        version: link:../../../packages/ts/core
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.0
+        version: 22.19.19
+
   ../../integrations/ts/reexport-adapter-openai:
     dependencies:
       '@llmorch/adapter-openai':
@@ -148,6 +161,22 @@ importers:
         specifier: ^22.10.0
         version: 22.19.19
 
+  ../../integrations/ts/standalone-adapter-local:
+    dependencies:
+      '@llmorch/core':
+        specifier: workspace:*
+        version: link:../../../packages/ts/core
+      openai:
+        specifier: ^4.77.0
+        version: 4.104.0(ws@8.21.0)(zod@3.25.76)
+      zod:
+        specifier: ^3.24.0
+        version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.0
+        version: 22.19.19
+
   ../../integrations/ts/standalone-adapter-openai:
     dependencies:
       '@llmorch/core':
@@ -197,6 +226,22 @@ importers:
         version: 22.19.19
 
   ../../integrations/ts/usecase-kit-adapter-gemini:
+    dependencies:
+      '@llmorch/core':
+        specifier: workspace:*
+        version: link:../../../packages/ts/core
+      '@llmorch/sdk':
+        specifier: workspace:*
+        version: link:../../../packages/ts/sdk
+      zod:
+        specifier: ^3.24.0
+        version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.0
+        version: 22.19.19
+
+  ../../integrations/ts/usecase-kit-adapter-local:
     dependencies:
       '@llmorch/core':
         specifier: workspace:*

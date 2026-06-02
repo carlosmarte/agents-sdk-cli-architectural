@@ -20,17 +20,18 @@ export * from "@llmorch/adapter-copilot";
 
 /** The provider id registered by this package. */
 export const PROVIDER_ID = "copilot" as const;
-/** Recommended default model for GitHub Copilot (via the Copilot CLI SDK). */
+/** Recommended default model for GitHub Copilot. */
 export const DEFAULT_MODEL = "gpt-4.1";
-/** Environment variable conventionally holding the GitHub credential. */
+/** Environment variable conventionally holding the credential. */
 export const API_KEY_ENV = "GITHUB_TOKEN";
 
-/** Pre-fill the provider id + default model for the helpers below. */
+/** Pre-fill the provider id + default model (+ base URL) for the helpers below. */
 function withDefaults(opts: Partial<ProviderConfig>): Partial<ProviderConfig> {
   return {
     defaultModel: DEFAULT_MODEL,
     ...opts,
     provider: PROVIDER_ID,
+    baseUrl: opts.baseUrl,
   };
 }
 

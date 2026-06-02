@@ -61,6 +61,23 @@ const PROVIDERS = {
     vendorVer: "^0.1.0",
     baseUrl: null,
   },
+  // Bring-your-own-endpoint adapter: speaks the OpenAI wire protocol against a
+  // user-supplied baseUrl, so a self-hosted server (Ollama / LM Studio / vLLM /
+  // llama.cpp / LocalAI) OR a private Azure OpenAI deployment flows through the
+  // same pipeline. The runnable examples (src/examples/run-*-mock.ts) point this
+  // at an in-process mock server so they execute offline, with no credentials.
+  local: {
+    pascal: "Local",
+    title: "a local / self-hosted or private LLM endpoint",
+    env: "LLMORCH_LOCAL_API_KEY",
+    model: "llama3.2",
+    vendorPkg: "openai",
+    vendorVer: "^4.77.0",
+    baseUrl: "http://localhost:11434/v1",
+    baseUrlNote:
+      "Default endpoint when none is supplied (Ollama's OpenAI-compatible path); " +
+      "override via `baseUrl` / `LLMORCH_BASE_URL` for LM Studio, vLLM, or a private Azure deployment.",
+  },
 };
 
 const tpl = (name) => readFileSync(join(TPL, name), "utf8");
@@ -127,10 +144,34 @@ function baseTokens(id, p) {
 }
 
 function baseUrlDecl(p) {
-  return p.baseUrl
-    ? `/** GitHub Models REST endpoint (OpenAI-compatible) this pathway targets. */\nexport const BASE_URL = "${p.baseUrl}";\n`
-    : "";
+  if (!p.baseUrl) return "";
+  const note = p.baseUrlNote ?? "Base URL this pathway targets (OpenAI-compatible).";
+  return `/** ${note} */\nexport const BASE_URL = "${p.baseUrl}";\n`;
 }
+
+/** Appended to the `local` kit README — documents the offline mock examples. */
+const LOCAL_MOCK_README_SECTION = `
+## Offline mock examples (self-hosted + private Azure)
+
+Two runnable demos exercise the **real** \`local\` adapter (openai client → HTTP)
+against an in-process, dependency-free OpenAI-compatible mock server
+(\`src/mock/openai-mock-server.ts\`) — no credentials, no network, no running model:
+
+\`\`\`sh
+pnpm --filter @llmorch-int/usecase-kit-adapter-local build
+node dist/examples/run-local-mock.js   # self-hosted (Ollama / LM Studio / vLLM …)
+node dist/examples/run-azure-mock.js    # private Azure OpenAI deployment
+\`\`\`
+
+- \`run-local-mock.ts\` points \`baseUrl\` at the mock; swap it for a real
+  \`http://localhost:11434/v1\` and the code is unchanged.
+- \`run-azure-mock.ts\` shows the Azure deltas the adapter handles via config
+  (deployment URL, \`api-key\` header via \`extraHeaders\`, \`api-version\`) plus the
+  401 → \`AuthenticationError\` mapping.
+
+These files are hand-authored (not scaffold-generated). \`test/mock-server.test.ts\`
+pins the mock + happy path in CI.
+`;
 
 const generated = [];
 
@@ -158,7 +199,13 @@ for (const [id, p] of Object.entries(PROVIDERS)) {
     writeFile(dir, "src/index.ts", render(tpl("kit-index.ts.tmpl"), t));
     writeFile(dir, "src/examples/run.ts", render(tpl("kit-example.ts.tmpl"), t));
     writeFile(dir, "test/kit.test.ts", render(tpl("kit-test.ts.tmpl"), t));
-    writeFile(dir, "README.md", render(tpl("kit-readme.md.tmpl"), t));
+    let readme = render(tpl("kit-readme.md.tmpl"), t);
+    // The `local` kit additionally carries hand-authored, fully-offline mock
+    // examples (an in-process OpenAI-compatible server) for self-hosted and
+    // private-Azure endpoints. Document them; the example/mock files themselves
+    // live outside the scaffold's write set so re-running never clobbers them.
+    if (id === "local") readme += LOCAL_MOCK_README_SECTION;
+    writeFile(dir, "README.md", readme);
     generated.push(`usecase-kit-adapter-${id}`);
   }
 

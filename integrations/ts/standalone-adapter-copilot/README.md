@@ -2,7 +2,7 @@
 
 **Pattern 2 — standalone re-implemented adapter** for GitHub Copilot. A self-contained
 implementation of the `LLMProvider` port against the vendor SDK
-(`openai`), independent of `@llmorch/adapter-copilot`. Importing it
+(`@github/copilot-sdk`), independent of `@llmorch/adapter-copilot`. Importing it
 self-registers the `copilot` provider, so you can vendor or fork this package
 without pulling the canonical adapter.
 

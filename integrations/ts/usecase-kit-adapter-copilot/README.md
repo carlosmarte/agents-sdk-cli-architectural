@@ -7,7 +7,7 @@ duplicated — every call runs through the canonical orchestrator.
 ```ts
 import { createCopilotKit } from "@llmorch-int/usecase-kit-adapter-copilot";
 
-const kit = createCopilotKit(); // reads GITHUB_TOKEN, default model gpt-4o-mini
+const kit = createCopilotKit(); // reads GITHUB_TOKEN, default model gpt-4.1
 
 await kit.ask("Summarize hexagonal architecture in one line.");
 for await (const delta of kit.stream("Count to 5")) process.stdout.write(delta);

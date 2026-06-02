@@ -1,8 +1,8 @@
 /**
- * @llmorch-int/usecase-kit-adapter-copilot — TS use-case kit for GitHub Copilot.
+ * @llmorch-int/usecase-kit-adapter-local — TS use-case kit for a local / self-hosted or private LLM endpoint.
  *
  * Pattern 1 of 3 (see ../README.md). Wraps `@llmorch/sdk`'s `createOrchestrator`
- * with the `copilot` provider and exposes idiomatic, fully-typed helpers for the
+ * with the `local` provider and exposes idiomatic, fully-typed helpers for the
  * real modalities — chat, streaming, structured output, tool calling, multi-
  * provider fallback, and telemetry. It duplicates NO port logic: every call goes
  * through the canonical orchestrator + adapter.
@@ -20,15 +20,17 @@ import { createOrchestrator } from "@llmorch/sdk";
 import type { ZodType } from "zod";
 
 /** The provider id this kit targets. */
-export const PROVIDER_ID = "copilot" as const;
+export const PROVIDER_ID = "local" as const;
 /** Model used when neither the call nor the kit options specify one. */
-export const DEFAULT_MODEL = "gpt-4.1";
+export const DEFAULT_MODEL = "llama3.2";
 /** Environment variable read for the API key when `apiKey` is not passed. */
-export const API_KEY_ENV = "GITHUB_TOKEN";
+export const API_KEY_ENV = "LLMORCH_LOCAL_API_KEY";
+/** Default endpoint when none is supplied (Ollama's OpenAI-compatible path); override via `baseUrl` / `LLMORCH_BASE_URL` for LM Studio, vLLM, or a private Azure deployment. */
+export const BASE_URL = "http://localhost:11434/v1";
 
-/** Options for {@link createCopilotKit}. */
-export interface CopilotKitOptions {
-  /** API key; defaults to `process.env.GITHUB_TOKEN`. */
+/** Options for {@link createLocalKit}. */
+export interface LocalKitOptions {
+  /** API key; defaults to `process.env.LLMORCH_LOCAL_API_KEY`. */
   apiKey?: string;
   /** Default model for every call; defaults to {@link DEFAULT_MODEL}. */
   model?: string;
@@ -40,7 +42,7 @@ export interface CopilotKitOptions {
   maxTokens?: number;
   /** Telemetry hook forwarded to the orchestrator. */
   telemetry?: TelemetryHook;
-  /** Providers appended after `copilot` to form an ordered fallback chain. */
+  /** Providers appended after `local` to form an ordered fallback chain. */
   fallback?: Array<Partial<ProviderConfig>>;
   /** Inject a prebuilt orchestrator (tests / advanced wiring). */
   orchestrator?: Orchestrator;
@@ -61,8 +63,8 @@ export type ToolHandlers = Record<
   (args: Record<string, unknown>) => string | Promise<string>
 >;
 
-/** The typed kit surface returned by {@link createCopilotKit}. */
-export interface CopilotKit {
+/** The typed kit surface returned by {@link createLocalKit}. */
+export interface LocalKit {
   readonly provider: typeof PROVIDER_ID;
   readonly model: string;
   readonly orchestrator: Orchestrator;
@@ -84,16 +86,16 @@ export interface CopilotKit {
 }
 
 /**
- * Build a use-case kit for GitHub Copilot. With no options it reads the key from
- * `process.env.GITHUB_TOKEN` and targets {@link DEFAULT_MODEL}; pass `fallback` to add
+ * Build a use-case kit for a local / self-hosted or private LLM endpoint. With no options it reads the key from
+ * `process.env.LLMORCH_LOCAL_API_KEY` and targets {@link DEFAULT_MODEL}; pass `fallback` to add
  * downstream providers, or `orchestrator` to inject your own.
  */
-export function createCopilotKit(
-  options: CopilotKitOptions = {},
-): CopilotKit {
+export function createLocalKit(
+  options: LocalKitOptions = {},
+): LocalKit {
   const model = options.model ?? DEFAULT_MODEL;
-  const apiKey = options.apiKey ?? process.env.GITHUB_TOKEN;
-  const baseUrl = options.baseUrl;
+  const apiKey = options.apiKey ?? process.env.LLMORCH_LOCAL_API_KEY;
+  const baseUrl = options.baseUrl ?? BASE_URL;
   const defaultTemperature = options.temperature;
   const defaultMaxTokens = options.maxTokens;
 
