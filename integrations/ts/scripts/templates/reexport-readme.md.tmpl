@@ -1,0 +1,22 @@
+# @llmorch-int/reexport-adapter-__ID__
+
+**Pattern 3 — thin re-export wrapper** for __TITLE__. Re-exports the canonical
+`@llmorch/adapter-__ID__` (importing self-registers `__ID__`) and adds default
+constants + `create*` helpers.
+
+```ts
+import {
+  DEFAULT_MODEL,
+  create__PASCAL__Orchestrator,
+} from "@llmorch-int/reexport-adapter-__ID__";
+
+const orch = create__PASCAL__Orchestrator({ apiKey: process.env.__ENV__ });
+const res = await orch.chat({
+  model: DEFAULT_MODEL,
+  messages: [{ role: "user", content: "hi" }],
+});
+```
+
+Exports: `PROVIDER_ID`, `DEFAULT_MODEL`, `API_KEY_ENV`,
+`create__PASCAL__Provider`, `create__PASCAL__Orchestrator`, plus everything
+re-exported from `@llmorch/adapter-__ID__`.

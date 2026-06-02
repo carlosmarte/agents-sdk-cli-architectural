@@ -1,0 +1,44 @@
+[
+  {
+    "id": "openai-base-chat",
+    "provider": "openai",
+    "recorded": "openai-base-chat/recorded.json",
+    "expected": "openai-base-chat/expected.json",
+    "note": "baseline OpenAI chat mapping"
+  },
+  {
+    "id": "anthropic-base-chat",
+    "provider": "anthropic",
+    "recorded": "anthropic-base-chat/recorded.json",
+    "expected": "anthropic-base-chat/expected.json",
+    "note": "Anthropic text-block + stop_reason mapping"
+  },
+  {
+    "id": "gemini-base-chat",
+    "provider": "gemini",
+    "recorded": "gemini-base-chat/recorded.json",
+    "expected": "gemini-base-chat/expected.json",
+    "note": "Gemini camelCase usageMetadata mapping"
+  },
+  {
+    "id": "copilot-base-chat",
+    "provider": "copilot",
+    "recorded": "copilot-base-chat/recorded.json",
+    "expected": "copilot-base-chat/expected.json",
+    "note": "Copilot CLI SDK reply ({data:{content}}) chat mapping; no token usage"
+  },
+  {
+    "id": "openai-structured",
+    "provider": "openai",
+    "recorded": "openai-structured/recorded.json",
+    "expected": "openai-structured/expected.json",
+    "note": "structured-output JSON surfaced verbatim as text"
+  },
+  {
+    "id": "openai-usage",
+    "provider": "openai",
+    "recorded": "openai-usage/recorded.json",
+    "expected": "openai-usage/expected.json",
+    "note": "usage extraction drops provider total_tokens"
+  }
+]

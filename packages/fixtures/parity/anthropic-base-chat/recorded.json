@@ -1,0 +1,11 @@
+{
+  "request": {
+    "model": "claude-3-5-sonnet-latest",
+    "messages": [{ "role": "user", "content": "Hi" }]
+  },
+  "providerResponse": {
+    "content": [{ "type": "text", "text": "Hi there." }],
+    "usage": { "input_tokens": 15, "output_tokens": 6 },
+    "stop_reason": "end_turn"
+  }
+}

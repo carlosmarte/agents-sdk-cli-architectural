@@ -1,0 +1,23 @@
+{
+  "name": "@llmorch/adapter-anthropic",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "lint": "eslint src",
+    "test": "vitest run --passWithNoTests"
+  },
+  "files": ["dist"],
+  "dependencies": {
+    "@llmorch/core": "workspace:*",
+    "@anthropic-ai/sdk": "^0.39.0"
+  }
+}

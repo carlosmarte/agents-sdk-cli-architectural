@@ -1,0 +1,6 @@
+{
+  "finishReason": "stop",
+  "text": "Pong.",
+  "toolCalls": [],
+  "usage": { "completionTokens": 0, "promptTokens": 0 }
+}

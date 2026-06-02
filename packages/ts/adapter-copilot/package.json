@@ -1,0 +1,23 @@
+{
+  "name": "@llmorch/adapter-copilot",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "lint": "eslint src",
+    "test": "vitest run --passWithNoTests"
+  },
+  "files": ["dist"],
+  "dependencies": {
+    "@llmorch/core": "workspace:*",
+    "@github/copilot-sdk": "^0.1.0"
+  }
+}

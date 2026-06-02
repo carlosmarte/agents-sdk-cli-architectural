@@ -1,0 +1,6 @@
+{
+  "finishReason": "length",
+  "text": "Counted.",
+  "toolCalls": [],
+  "usage": { "completionTokens": 50, "promptTokens": 100 }
+}

@@ -1,0 +1,6 @@
+{
+  "finishReason": "stop",
+  "text": "{\"city\":\"Paris\",\"population\":2102000}",
+  "toolCalls": [],
+  "usage": { "completionTokens": 14, "promptTokens": 30 }
+}

@@ -1,0 +1,7 @@
+packages:
+  - core
+  - adapter-*
+  - sdk
+  - cli
+  - ../../integrations/ts
+  - ../../integrations/ts/*

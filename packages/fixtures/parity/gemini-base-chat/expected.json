@@ -1,0 +1,6 @@
+{
+  "finishReason": "stop",
+  "text": "Sure, here you go.",
+  "toolCalls": [],
+  "usage": { "completionTokens": 10, "promptTokens": 20 }
+}

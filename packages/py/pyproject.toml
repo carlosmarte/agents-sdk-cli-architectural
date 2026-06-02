@@ -1,0 +1,44 @@
+[project]
+name = "llmorch-workspace"
+version = "0.0.0"
+requires-python = ">=3.11"
+
+[tool.uv.workspace]
+members = ["llmorch-*"]
+
+[dependency-groups]
+dev = ["pytest>=8", "mypy>=1.13", "ruff>=0.8"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.flake8-bugbear]
+# Typer's declarative API intentionally puts Option/Argument calls in defaults.
+extend-immutable-calls = ["typer.Option", "typer.Argument"]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "llmorch-core",
+    "llmorch-adapter-openai",
+    "llmorch-adapter-anthropic",
+    "llmorch-adapter-gemini",
+    "llmorch-adapter-copilot",
+    "llmorch-sdk",
+    "llmorch-cli",
+]
+markers = [
+    "parity: cross-language TS/Py behavioral parity tests",
+]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+warn_required_dynamic_aliases = true

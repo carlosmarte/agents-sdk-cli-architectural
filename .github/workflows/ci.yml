@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ts:
+    name: TypeScript (pnpm)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: packages/ts/pnpm-lock.yaml
+      - name: TS CI (lint + test + build)
+        working-directory: packages/ts
+        run: make ci
+
+  py:
+    name: Python (uv)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Py CI (lint + test + build)
+        working-directory: packages/py
+        run: make ci
+
+  # Cross-language twin-drift gate. Needs both language jobs green, then runs the
+  # shared-fixture parity harness on a single runner with both toolchains. A
+  # divergence makes `make parity` exit non-zero and fails the job (fail-fast: a
+  # TS-side drift short-circuits before the Python run).
+  parity:
+    name: Polyglot parity (twin drift gate)
+    needs: [ts, py]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: packages/ts/pnpm-lock.yaml
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install workspaces (both toolchains)
+        run: |
+          make -C packages/ts ci-install
+          make -C packages/py ci-install
+      - name: Build TS twins (parity loads built adapter normalizers)
+        working-directory: packages/ts
+        run: make build
+      - name: Polyglot parity (twin drift gate)
+        working-directory: packages
+        run: make parity

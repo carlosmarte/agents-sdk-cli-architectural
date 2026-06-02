@@ -1,0 +1,15 @@
+{
+  "request": {
+    "model": "gemini-2.0-flash",
+    "messages": [{ "role": "user", "content": "Hi" }]
+  },
+  "providerResponse": {
+    "text": "Sure, here you go.",
+    "usageMetadata": {
+      "promptTokenCount": 20,
+      "candidatesTokenCount": 10,
+      "totalTokenCount": 30
+    },
+    "candidates": [{ "finishReason": "STOP" }]
+  }
+}

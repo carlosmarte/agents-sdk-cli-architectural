@@ -1,0 +1,25 @@
+.agents/skills/agentteams
+.agents/skills/agentteams-assets
+.claude/skills/agentteams
+.claude/skills/agentteams-assets
+
+# Build artifacts / deps (workspace)
+**/node_modules/
+**/dist/
+**/*.tsbuildinfo
+packages/py/.venv/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.pytest_cache/
+**/__pycache__/
+
+# Plan tree (local-only, untracked)
+.plans/
+.claude/skills/orchestration-cli-routing-architect
+.claude/skills/orchestration-devtool-hexagonal-core
+.claude/skills/orchestration-devtool-test-harness
+.claude/skills/orchestration-sdk-cli-architect
+.claude/skills/orchestration-sdk-client-state-isolation
+.claude/skills/orchestration-sdk-pattern-selector
+.claude/skills/agent-skill-kit-*
+.claude/skills/claude-symlink-agent-individual-skills

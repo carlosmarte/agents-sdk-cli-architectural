@@ -1,0 +1,15 @@
+{
+  "request": {
+    "model": "gpt-4o-mini",
+    "messages": [{ "role": "user", "content": "Hi" }]
+  },
+  "providerResponse": {
+    "choices": [
+      {
+        "message": { "content": "Hello! How can I help?" },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": { "prompt_tokens": 12, "completion_tokens": 8, "total_tokens": 20 }
+  }
+}

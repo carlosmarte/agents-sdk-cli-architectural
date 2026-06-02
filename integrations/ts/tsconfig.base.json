@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+    "outDir": "dist",
+    "rootDir": "src"
+  }
+}

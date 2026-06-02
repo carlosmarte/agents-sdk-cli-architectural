@@ -1,0 +1,51 @@
+/**
+ * @llmorch-int/reexport-adapter-__ID__ — Pattern 3 of 3 (see ../README.md).
+ *
+ * The thinnest integration: it re-exports the canonical `@llmorch/adapter-__ID__`
+ * (importing it self-registers the `__ID__` provider) and adds a small,
+ * provider-specific convenience layer — the default model, the API-key env var,
+ * and `create*` factory helpers — so callers don't re-type those constants.
+ */
+import {
+  createOrchestrator,
+  createProvider,
+  type LLMProvider,
+  type Orchestrator,
+  type ProviderConfig,
+  type TelemetryHook,
+} from "@llmorch/core";
+
+// Re-export the canonical adapter surface; this import self-registers `__ID__`.
+export * from "@llmorch/adapter-__ID__";
+
+/** The provider id registered by this package. */
+export const PROVIDER_ID = "__ID__" as const;
+/** Recommended default model for __TITLE__. */
+export const DEFAULT_MODEL = "__MODEL__";
+/** Environment variable conventionally holding the credential. */
+export const API_KEY_ENV = "__ENV__";
+__BASEURL_DECL__
+/** Pre-fill the provider id + default model (+ base URL) for the helpers below. */
+function withDefaults(opts: Partial<ProviderConfig>): Partial<ProviderConfig> {
+  return {
+    defaultModel: DEFAULT_MODEL,
+    ...opts,
+    provider: PROVIDER_ID,
+    baseUrl: __BASEURL_DEFAULT__,
+  };
+}
+
+/** Build a bare {@link LLMProvider} for __TITLE__ (adapter already registered). */
+export function create__PASCAL__Provider(
+  opts: Partial<ProviderConfig> = {},
+): LLMProvider {
+  return createProvider(PROVIDER_ID, withDefaults(opts));
+}
+
+/** Build a single-provider {@link Orchestrator} for __TITLE__. */
+export function create__PASCAL__Orchestrator(
+  opts: Partial<ProviderConfig> = {},
+  telemetry?: TelemetryHook,
+): Orchestrator {
+  return createOrchestrator(withDefaults(opts), { telemetry });
+}

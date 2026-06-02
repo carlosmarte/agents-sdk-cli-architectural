@@ -1,0 +1,16 @@
+{
+  "request": {
+    "model": "gpt-4o-mini",
+    "messages": [{ "role": "user", "content": "Write a long answer" }],
+    "maxTokens": 50
+  },
+  "providerResponse": {
+    "choices": [
+      {
+        "message": { "content": "Counted." },
+        "finish_reason": "length"
+      }
+    ],
+    "usage": { "prompt_tokens": 100, "completion_tokens": 50, "total_tokens": 150 }
+  }
+}
