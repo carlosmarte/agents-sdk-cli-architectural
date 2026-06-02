@@ -33,6 +33,7 @@ export const PROVIDER_INFO: ReadonlyArray<ProviderInfo> = [
   { id: "anthropic", defaultModel: "claude-3-5-sonnet-latest", keyEnv: "ANTHROPIC_API_KEY" },
   { id: "copilot", defaultModel: "gpt-4.1", keyEnv: "GITHUB_TOKEN" },
   { id: "gemini", defaultModel: "gemini-1.5-flash", keyEnv: "GEMINI_API_KEY" },
+  { id: "local", defaultModel: "llama3.2", keyEnv: "LLMORCH_LOCAL_API_KEY" },
   { id: "openai", defaultModel: "gpt-4o", keyEnv: "OPENAI_API_KEY" },
 ];
 

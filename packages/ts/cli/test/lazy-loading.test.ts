@@ -32,7 +32,7 @@ vi.mock("@llmorch/sdk", () => {
   };
   return {
     createOrchestrator: () => fakeOrch,
-    registeredProviders: () => ["anthropic", "copilot", "gemini", "openai"],
+    registeredProviders: () => ["anthropic", "copilot", "gemini", "local", "openai"],
   };
 });
 

@@ -5,6 +5,7 @@ import "@llmorch/adapter-openai";
 import "@llmorch/adapter-anthropic";
 import "@llmorch/adapter-gemini";
 import "@llmorch/adapter-copilot";
+import "@llmorch/adapter-local";
 
 export { createOrchestrator, registeredProviders } from "@llmorch/core";
 export type { Orchestrator, ProviderConfig, TelemetryHook } from "@llmorch/core";

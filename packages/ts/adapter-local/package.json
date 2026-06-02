@@ -1,5 +1,5 @@
 {
-  "name": "@llmorch/sdk",
+  "name": "@llmorch/adapter-local",
   "version": "0.0.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -18,10 +18,6 @@
   "files": ["dist"],
   "dependencies": {
     "@llmorch/core": "workspace:*",
-    "@llmorch/adapter-openai": "workspace:*",
-    "@llmorch/adapter-anthropic": "workspace:*",
-    "@llmorch/adapter-gemini": "workspace:*",
-    "@llmorch/adapter-copilot": "workspace:*",
-    "@llmorch/adapter-local": "workspace:*"
+    "openai": "^4.77.0"
   }
 }

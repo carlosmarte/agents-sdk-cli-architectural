@@ -8,6 +8,7 @@ dependencies = [
     "llmorch-adapter-anthropic",
     "llmorch-adapter-gemini",
     "llmorch-adapter-copilot",
+    "llmorch-adapter-local",
 ]
 
 [build-system]
@@ -23,3 +24,4 @@ llmorch-adapter-openai = { workspace = true }
 llmorch-adapter-anthropic = { workspace = true }
 llmorch-adapter-gemini = { workspace = true }
 llmorch-adapter-copilot = { workspace = true }
+llmorch-adapter-local = { workspace = true }

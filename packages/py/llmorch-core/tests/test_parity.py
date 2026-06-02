@@ -18,6 +18,7 @@ import pytest
 from llmorch_adapter_anthropic import AnthropicAdapter
 from llmorch_adapter_copilot import CopilotAdapter
 from llmorch_adapter_gemini import GeminiAdapter
+from llmorch_adapter_local import LocalAdapter
 from llmorch_adapter_openai import OpenAIAdapter
 from llmorch_core import LLMProvider, ProviderConfig
 
@@ -33,6 +34,7 @@ _ADAPTERS: dict[str, LLMProvider] = {
     "anthropic": AnthropicAdapter(_CFG),
     "gemini": GeminiAdapter(_CFG),
     "copilot": CopilotAdapter(_CFG),
+    "local": LocalAdapter(_CFG),
 }
 
 _CAMEL = re.compile(r"(?<!^)(?=[A-Z])")

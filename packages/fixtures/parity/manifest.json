@@ -28,6 +28,13 @@
     "note": "Copilot CLI SDK reply ({data:{content}}) chat mapping; no token usage"
   },
   {
+    "id": "local-base-chat",
+    "provider": "local",
+    "recorded": "local-base-chat/recorded.json",
+    "expected": "local-base-chat/expected.json",
+    "note": "local (OpenAI-compatible) chat mapping — twin of openai-base-chat"
+  },
+  {
     "id": "openai-structured",
     "provider": "openai",
     "recorded": "openai-structured/recorded.json",

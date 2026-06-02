@@ -8,6 +8,7 @@ import type { ProviderConfig } from "../src/config.js";
 import { AnthropicAdapter } from "../../adapter-anthropic/src/index.js";
 import { CopilotAdapter } from "../../adapter-copilot/src/index.js";
 import { GeminiAdapter } from "../../adapter-gemini/src/index.js";
+import { LocalAdapter } from "../../adapter-local/src/index.js";
 import { OpenAIAdapter } from "../../adapter-openai/src/index.js";
 
 /**
@@ -40,6 +41,7 @@ const normalizers: Record<string, (res: unknown) => unknown> = {
   anthropic: (res) => new AnthropicAdapter(cfg).mapResponse(res as never),
   gemini: (res) => new GeminiAdapter(cfg).mapResponse(res as never),
   copilot: (res) => new CopilotAdapter(cfg).mapResponse(res as never),
+  local: (res) => new LocalAdapter(cfg).mapResponse(res as never),
 };
 
 /** Recursively key-sort then compact-stringify — the cross-language canonical form. */

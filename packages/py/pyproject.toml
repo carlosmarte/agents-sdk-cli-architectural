@@ -27,6 +27,7 @@ testpaths = [
     "llmorch-adapter-anthropic",
     "llmorch-adapter-gemini",
     "llmorch-adapter-copilot",
+    "llmorch-adapter-local",
     "llmorch-sdk",
     "llmorch-cli",
 ]

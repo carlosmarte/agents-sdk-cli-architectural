@@ -52,16 +52,17 @@ def test_structured_missing_schema_exits_nonzero(use_fake: None) -> None:
     assert result.exit_code == 1
 
 
-def test_providers_lists_four_with_resolved_config(monkeypatch: pytest.MonkeyPatch) -> None:
-    for var in ("ANTHROPIC_API_KEY", "GEMINI_API_KEY", "GITHUB_TOKEN"):
+def test_providers_lists_resolved_config(monkeypatch: pytest.MonkeyPatch) -> None:
+    for var in ("ANTHROPIC_API_KEY", "GEMINI_API_KEY", "GITHUB_TOKEN", "LLMORCH_LOCAL_API_KEY"):
         monkeypatch.delenv(var, raising=False)
     monkeypatch.setenv("OPENAI_API_KEY", "sk-x")
     result = runner.invoke(app, ["providers"])
     assert result.exit_code == 0
     ids = [line.split("  ")[0] for line in result.stdout.strip().splitlines()]
-    assert ids == ["anthropic", "copilot", "gemini", "openai"]
+    assert ids == ["anthropic", "copilot", "gemini", "local", "openai"]
     assert "openai  default_model=gpt-4o  key_present=true" in result.stdout
     assert "anthropic  default_model=claude-3-5-sonnet-latest  key_present=false" in result.stdout
+    assert "local  default_model=llama3.2  key_present=false" in result.stdout
 
 
 def test_precedence_flag_over_env() -> None:

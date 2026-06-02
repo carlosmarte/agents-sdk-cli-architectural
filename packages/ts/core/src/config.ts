@@ -1,11 +1,17 @@
 import { z } from "zod";
 
-/** The four supported provider ids. */
+/**
+ * The supported provider ids. `local` is the bring-your-own-endpoint provider:
+ * it speaks the OpenAI wire protocol against a user-supplied `baseUrl`, letting
+ * a private / self-hosted LLM (Ollama, LM Studio, vLLM, llama.cpp server,
+ * LocalAI, …) flow through the exact same pipeline as the hosted providers.
+ */
 export const ProviderIdSchema = z.enum([
   "openai",
   "anthropic",
   "gemini",
   "copilot",
+  "local",
 ]);
 export type ProviderId = z.infer<typeof ProviderIdSchema>;
 
@@ -27,6 +33,9 @@ const PROVIDER_KEY_ENV: Record<ProviderId, string> = {
   anthropic: "ANTHROPIC_API_KEY",
   gemini: "GEMINI_API_KEY",
   copilot: "GITHUB_TOKEN",
+  // Local servers usually need no key; this is honored when one is set (e.g. a
+  // reverse-proxied endpoint), and the adapter falls back to a placeholder.
+  local: "LLMORCH_LOCAL_API_KEY",
 };
 
 /**
@@ -43,11 +52,16 @@ export function resolveConfig(
       ? env[PROVIDER_KEY_ENV[provider as ProviderId]]
       : undefined;
   const apiKey = partial.apiKey ?? providerKey ?? env.LLMORCH_API_KEY;
+  // A provider-agnostic endpoint override. The `local` adapter relies on this
+  // (or its own default) to reach a self-hosted server; hosted adapters may use
+  // it to target a compatible proxy.
+  const baseUrl = partial.baseUrl ?? env.LLMORCH_BASE_URL;
 
   return ProviderConfigSchema.parse({
     ...partial,
     provider,
     apiKey,
+    baseUrl,
     timeoutMs: partial.timeoutMs ?? 30_000,
     maxRetries: partial.maxRetries ?? 2,
   });

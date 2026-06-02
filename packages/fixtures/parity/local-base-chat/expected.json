@@ -1,0 +1,6 @@
+{
+  "finishReason": "stop",
+  "text": "Hello from your local model.",
+  "toolCalls": [],
+  "usage": { "completionTokens": 6, "promptTokens": 9 }
+}

@@ -1,0 +1,15 @@
+{
+  "request": {
+    "model": "llama3.2",
+    "messages": [{ "role": "user", "content": "Hi" }]
+  },
+  "providerResponse": {
+    "choices": [
+      {
+        "message": { "content": "Hello from your local model." },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": { "prompt_tokens": 9, "completion_tokens": 6, "total_tokens": 15 }
+  }
+}

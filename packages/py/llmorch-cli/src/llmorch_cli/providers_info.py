@@ -20,6 +20,7 @@ PROVIDER_INFO: list[ProviderInfo] = [
     ProviderInfo("anthropic", "claude-3-5-sonnet-latest", "ANTHROPIC_API_KEY"),
     ProviderInfo("copilot", "gpt-4.1", "GITHUB_TOKEN"),
     ProviderInfo("gemini", "gemini-1.5-flash", "GEMINI_API_KEY"),
+    ProviderInfo("local", "llama3.2", "LLMORCH_LOCAL_API_KEY"),
     ProviderInfo("openai", "gpt-4o", "OPENAI_API_KEY"),
 ]
 

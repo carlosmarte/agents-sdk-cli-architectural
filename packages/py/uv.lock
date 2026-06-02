@@ -11,6 +11,7 @@ members = [
     "llmorch-adapter-anthropic",
     "llmorch-adapter-copilot",
     "llmorch-adapter-gemini",
+    "llmorch-adapter-local",
     "llmorch-adapter-openai",
     "llmorch-cli",
     "llmorch-core",
@@ -661,6 +662,21 @@ requires-dist = [
 ]
 
 [[package]]
+name = "llmorch-adapter-local"
+version = "0.0.0"
+source = { editable = "llmorch-adapter-local" }
+dependencies = [
+    { name = "llmorch-core" },
+    { name = "openai" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "llmorch-core", editable = "llmorch-core" },
+    { name = "openai", specifier = ">=1.0" },
+]
+
+[[package]]
 name = "llmorch-adapter-openai"
 version = "0.0.0"
 source = { editable = "llmorch-adapter-openai" }
@@ -717,6 +733,7 @@ dependencies = [
     { name = "llmorch-adapter-anthropic" },
     { name = "llmorch-adapter-copilot" },
     { name = "llmorch-adapter-gemini" },
+    { name = "llmorch-adapter-local" },
     { name = "llmorch-adapter-openai" },
     { name = "llmorch-core" },
 ]
@@ -726,6 +743,7 @@ requires-dist = [
     { name = "llmorch-adapter-anthropic", editable = "llmorch-adapter-anthropic" },
     { name = "llmorch-adapter-copilot", editable = "llmorch-adapter-copilot" },
     { name = "llmorch-adapter-gemini", editable = "llmorch-adapter-gemini" },
+    { name = "llmorch-adapter-local", editable = "llmorch-adapter-local" },
     { name = "llmorch-adapter-openai", editable = "llmorch-adapter-openai" },
     { name = "llmorch-core", editable = "llmorch-core" },
 ]

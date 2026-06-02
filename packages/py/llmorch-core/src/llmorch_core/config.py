@@ -9,7 +9,11 @@ from typing import Any, Literal
 from pydantic import BaseModel, HttpUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-ProviderId = Literal["openai", "anthropic", "gemini", "copilot"]
+# `local` is the bring-your-own-endpoint provider: it speaks the OpenAI wire
+# protocol against a user-supplied base_url, letting a private / self-hosted LLM
+# (Ollama, LM Studio, vLLM, llama.cpp server, LocalAI, …) flow through the exact
+# same pipeline as the hosted providers.
+ProviderId = Literal["openai", "anthropic", "gemini", "copilot", "local"]
 
 # provider id → the snake_case _EnvSettings field holding its provider-specific key.
 _PROVIDER_KEY_FIELD: dict[str, str] = {
@@ -17,6 +21,9 @@ _PROVIDER_KEY_FIELD: dict[str, str] = {
     "anthropic": "anthropic_api_key",
     "gemini": "gemini_api_key",
     "copilot": "github_token",
+    # Local servers usually need no key; honored when set, else the adapter
+    # falls back to a placeholder.
+    "local": "llmorch_local_api_key",
 }
 
 
@@ -37,10 +44,12 @@ class _EnvSettings(BaseSettings):
 
     llmorch_provider: str | None = None
     llmorch_api_key: str | None = None
+    llmorch_base_url: str | None = None
     openai_api_key: str | None = None
     anthropic_api_key: str | None = None
     gemini_api_key: str | None = None
     github_token: str | None = None
+    llmorch_local_api_key: str | None = None
 
 
 def resolve_config(**partial: Any) -> ProviderConfig:
@@ -55,5 +64,13 @@ def resolve_config(**partial: Any) -> ProviderConfig:
             provider_key = getattr(env, field, None)
 
     api_key = partial.get("api_key") or provider_key or env.llmorch_api_key
-    merged: dict[str, Any] = {**partial, "provider": provider, "api_key": api_key}
+    # Provider-agnostic endpoint override; the `local` adapter relies on this
+    # (or its own default) to reach a self-hosted server.
+    base_url = partial.get("base_url") or env.llmorch_base_url
+    merged: dict[str, Any] = {
+        **partial,
+        "provider": provider,
+        "api_key": api_key,
+        "base_url": base_url,
+    }
     return ProviderConfig.model_validate({k: v for k, v in merged.items() if v is not None})

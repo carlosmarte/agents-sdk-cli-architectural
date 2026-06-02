@@ -59,15 +59,16 @@ describe("@llmorch/cli commands (FakeProvider-backed)", () => {
     expect(err).toContain("schema file");
   });
 
-  it("providers lists exactly the four real providers with resolved config", async () => {
+  it("providers lists exactly the real providers with resolved config", async () => {
     const { code, out } = await runCapture(["providers"], {
       env: { OPENAI_API_KEY: "sk-x" },
     });
     expect(code).toBe(0);
     const ids = out.trim().split("\n").map((line) => line.split("  ")[0]);
-    expect(ids).toEqual(["anthropic", "copilot", "gemini", "openai"]);
+    expect(ids).toEqual(["anthropic", "copilot", "gemini", "local", "openai"]);
     expect(out).toContain("openai  default_model=gpt-4o  key_present=true");
     expect(out).toContain("anthropic  default_model=claude-3-5-sonnet-latest  key_present=false");
+    expect(out).toContain("local  default_model=llama3.2  key_present=false");
   });
 
   it("flag precedence: explicit --provider overrides LLMORCH_PROVIDER", () => {

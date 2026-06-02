@@ -6,6 +6,7 @@
     { "path": "./adapter-anthropic" },
     { "path": "./adapter-gemini" },
     { "path": "./adapter-copilot" },
+    { "path": "./adapter-local" },
     { "path": "./sdk" },
     { "path": "./cli" }
   ]
